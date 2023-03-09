@@ -35,8 +35,8 @@ public class Main {
         //x, idx
         List<int[]> mountains = new ArrayList<>();
         for (int i = 0; i < N; i++) {
-//            if ((arr.get(i)[1] < 0 && arr.get(i + 1)[1] > 0) || (arr.get(i)[1] > 0 && arr.get(i + 1)[1] < 0)) {
-            if ((long) arr.get(i)[1] * arr.get(i + 1)[1] < 0) {
+            if ((arr.get(i)[1] < 0 && arr.get(i + 1)[1] > 0) || (arr.get(i)[1] > 0 && arr.get(i + 1)[1] < 0)) {
+//            if ((long) arr.get(i)[1] * arr.get(i + 1)[1] < 0) {
 //                System.out.println(idx);
                 mountains.add(new int[]{arr.get(i)[0], idx});
                 cnt++;
