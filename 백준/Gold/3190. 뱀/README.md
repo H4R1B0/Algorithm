@@ -4,11 +4,11 @@
 
 ### 성능 요약
 
-메모리: 2064 KB, 시간: 0 ms
+메모리: 14764 KB, 시간: 144 ms
 
 ### 분류
 
-자료 구조(data_structures), 덱(deque), 구현(implementation), 큐(queue), 시뮬레이션(simulation)
+자료 구조, 덱, 구현, 큐, 시뮬레이션
 
 ### 문제 설명
 
