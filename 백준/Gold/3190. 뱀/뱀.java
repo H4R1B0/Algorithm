@@ -46,16 +46,13 @@ public class Main {
 
             if (nx < 0 || nx >= N || ny < 0 || ny >= N || board[nx][ny] == 2)
                 break;
-
+            
+            dq.addFirst(new Pos(nx, ny));
             if (board[nx][ny] == 0) {
-                dq.addFirst(new Pos(nx, ny));
-                board[nx][ny] = 2;
                 board[dq.peekLast().x][dq.peekLast().y] = 0;
                 dq.pollLast();
-            } else if (board[nx][ny] == 1) {
-                dq.addFirst(new Pos(nx, ny));
-                board[nx][ny] = 2;
             }
+            board[nx][ny] = 2;
 
             if (idx < arr.size()) {
                 if (time == arr.get(idx).time) {
