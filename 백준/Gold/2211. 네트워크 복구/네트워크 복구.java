@@ -7,7 +7,7 @@ public class Main {
     private static int N, M;
     private static int dist[];
     private static int parent[];
-    private static List<int[]>[] brides;
+    private static List<int[]>[] bridges;
 
     public static void main(String[] args) throws IOException {
         //입력
@@ -17,9 +17,9 @@ public class Main {
         M = Integer.parseInt(st.nextToken());
 
         //컴퓨터간에 연결할 리스트
-        brides = new ArrayList[N + 1];
+        bridges = new ArrayList[N + 1];
         for (int i = 1; i <= N; i++) {
-            brides[i] = new ArrayList<int[]>();
+            bridges[i] = new ArrayList<int[]>();
         }
         //거리 계산 배열
         dist = new int[N + 1];
@@ -35,8 +35,8 @@ public class Main {
             int b = Integer.parseInt(st.nextToken());
             int c = Integer.parseInt(st.nextToken());
 
-            brides[a].add(new int[]{b, c});
-            brides[b].add(new int[]{a, c});
+            bridges[a].add(new int[]{b, c});
+            bridges[b].add(new int[]{a, c});
         }
 
         dijkstra();
@@ -67,9 +67,9 @@ public class Main {
             if (dist[curIdx] > curCost)
                 continue;
 
-            for (int i = 0; i < brides[curIdx].size(); i++) {
-                int next = brides[curIdx].get(i)[0];
-                int nextCost = curCost + brides[curIdx].get(i)[1];
+            for (int i = 0; i < bridges[curIdx].size(); i++) {
+                int next = bridges[curIdx].get(i)[0];
+                int nextCost = curCost + bridges[curIdx].get(i)[1];
 
                 if (dist[next] > nextCost) {
                     dist[next] = nextCost;
