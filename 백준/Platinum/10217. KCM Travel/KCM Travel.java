@@ -61,6 +61,11 @@ public class Main {
             int curTime = cur.time;
 
             if (curIdx == N) {
+                answer = Math.min(answer, dist[curIdx][curCost]);
+                continue;
+            }
+
+            if (answer < dist[curIdx][curCost]) {
                 continue;
             }
 
