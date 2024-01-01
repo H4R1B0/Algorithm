@@ -1,56 +1,107 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
-import java.io.*;
 
 public class Main {
-    private static final int INF = 100001;
+
+    private static int N, M;
+    private static List<Point>[] bridges;
 
     public static void main(String[] args) throws IOException {
+        //입력
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         br.readLine();
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
 
-        List<Point>[] bridges = new ArrayList[N + 1];
+        bridges = new ArrayList[N + 1];
         for (int i = 1; i <= N; i++) {
-            bridges[i] = new ArrayList<Point>();
+            bridges[i] = new ArrayList<>();
         }
+
         for (int i = 0; i < K; i++) {
             st = new StringTokenizer(br.readLine());
             int u = Integer.parseInt(st.nextToken());
             int v = Integer.parseInt(st.nextToken());
             int c = Integer.parseInt(st.nextToken());
             int d = Integer.parseInt(st.nextToken());
+
             bridges[u].add(new Point(v, c, d));
         }
-        //dist[비용][정점]=시간
 
-        int[][] dist = new int[M + 1][N + 1];
-        for (int i = 0; i <= M; i++) {
-            Arrays.fill(dist[i], INF);
+        for (int i = 1; i <= N; i++) {
+            bridges[i].sort((o1, o2) -> {
+                return o1.time - o2.time;
+            });
         }
-        dist[0][1] = 0;
-        for (int i = 0; i <= M; i++) {
-            for (int j = 1; j <= N; j++) {
-                for (Point bridge : bridges[j]) {
-                    if (i + bridge.cost <= M) {
-                        dist[i + bridge.cost][bridge.idx] = Math.min(dist[i + bridge.cost][bridge.idx], dist[i][j] + bridge.time);
+
+        int answer = dijkstra();
+
+        System.out.println(answer == Integer.MAX_VALUE ? "Poor KCM" : answer);
+    }
+
+    private static int dijkstra() {
+        int answer = Integer.MAX_VALUE;
+
+        int[][] dist = new int[N + 1][M + 1];
+        for (int i = 1; i <= N; i++) {
+            Arrays.fill(dist[i], Integer.MAX_VALUE);
+        }
+        dist[1][0] = 0;
+
+        Queue<Point> q = new LinkedList<>();
+        q.offer(new Point(1, 0, 0));
+        while (!q.isEmpty()) {
+            Point cur = q.poll();
+            int curIdx = cur.idx;
+            int curCost = cur.cost;
+            int curTime = cur.time;
+
+            if (curIdx == N) {
+                continue;
+            }
+
+            if (dist[curIdx][curCost] < curTime) {
+                continue;
+            }
+
+            for (int i = 0; i < bridges[curIdx].size(); i++) {
+                Point next = bridges[curIdx].get(i);
+                int nextIdx = next.idx;
+                int nextCost = next.cost + curCost;
+                int nextTime = next.time + curTime;
+
+                if (nextCost > M) {
+                    continue;
+                }
+
+                if (dist[nextIdx][nextCost] <= nextTime) {
+                    continue;
+                }
+
+                for (int j = nextCost; j <= M; j++) {
+                    if (dist[nextIdx][j] > nextTime) {
+                        dist[nextIdx][j] = nextTime;
+                    } else {
+                        break;
                     }
                 }
+                q.offer(new Point(nextIdx, nextCost, nextTime));
             }
         }
-        int answer = INF;
+
         for (int i = 0; i <= M; i++) {
-            answer = Math.min(answer, dist[i][N]);
+            answer = Math.min(answer, dist[N][i]);
         }
-        System.out.println(answer == INF ? "Poor KCM" : answer);
+
+        return answer;
     }
 
     static class Point {
-        int idx;
-        int cost;
-        int time;
+        int idx, cost, time;
 
         public Point(int idx, int cost, int time) {
             this.idx = idx;
