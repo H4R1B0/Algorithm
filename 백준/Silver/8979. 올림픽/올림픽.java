@@ -27,13 +27,25 @@ public class Main {
             }
             return o2[1] - o1[1];
         });
+
+        int idx = -1;
+        for (int i = 0; i < N; i++) {
+            if (conturies.get(i)[0] == K) {
+                idx = i;
+                break;
+            }
+        }
+
         int answer = 0;
-        for(int i=0;i<K-1;i++){
-            if(conturies.get(i)[1] == conturies.get(K-1)[1] && conturies.get(i)[2] == conturies.get(K-1)[2] && conturies.get(i)[3] == conturies.get(K-1)[3]){
+        for (int i = 0; i < N; i++) {
+            if (conturies.get(i)[0] == K) {
+                break;
+            }
+            if (conturies.get(i)[1] == conturies.get(idx)[1] && conturies.get(i)[2] == conturies.get(idx)[2] && conturies.get(i)[3] == conturies.get(idx)[3]) {
                 continue;
             }
             answer++;
         }
-        System.out.println(answer+1);
+        System.out.println(answer + 1);
     }
 }
