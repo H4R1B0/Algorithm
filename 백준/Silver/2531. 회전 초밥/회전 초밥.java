@@ -47,7 +47,6 @@ public class Main {
 
             if (answer <= total) {
                 if (cnt[c] == 0) {
-                    answer = total + 1;
                     answer = Math.max(answer, total + 1);
                 } else {
                     answer = total;
