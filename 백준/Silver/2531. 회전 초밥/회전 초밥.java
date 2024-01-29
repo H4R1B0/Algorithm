@@ -30,16 +30,10 @@ public class Main {
             cnt[num]++;
         }
         int answer = total;
+        if (cnt[c] == 0) {
+            answer++;
+        }
         for (int i = 1; i < N; i++) {
-            if (answer <= total) {
-                if (cnt[c] == 0) {
-                    answer = total + 1;
-                    answer = Math.max(answer, total + 1);
-                } else {
-                    answer = total;
-                }
-            }
-
             int end = (i + k - 1) % N;
             if (cnt[arr[end]] == 0) {
                 total++;
@@ -50,17 +44,17 @@ public class Main {
             if (cnt[arr[i - 1]] == 0) {
                 total--;
             }
-        }
 
-        if (answer <= total) {
-            if (cnt[c] == 0) {
-                answer = total + 1;
-                answer = Math.max(answer, total + 1);
-            } else {
-                answer = total;
+            if (answer <= total) {
+                if (cnt[c] == 0) {
+                    answer = total + 1;
+                    answer = Math.max(answer, total + 1);
+                } else {
+                    answer = total;
+                }
             }
         }
-        
+
         System.out.println(answer);
     }
 }
