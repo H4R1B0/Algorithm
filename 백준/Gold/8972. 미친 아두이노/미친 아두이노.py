@@ -1,3 +1,5 @@
+from collections import deque
+
 xd = (-1,1,1,1,0,0,0,-1,-1,-1)
 yd = (-1,-1,0,1,-1,0,1,-1,0,1)
 
@@ -7,7 +9,7 @@ moves = list(map(int, input()))
 # print(board)
 # print(moves)
 loc_js = [(i,j) for i in range(R) for j in range(C) if board[i][j]=='I'][0]
-loc_ad = [(i,j) for i in range(R) for j in range(C) if board[i][j]=='R']
+loc_ad = set((i,j) for i in range(R) for j in range(C) if board[i][j]=='R')
 # print(loc_ad)
 
 def get_dist(A, B):
@@ -30,34 +32,38 @@ def move_js(dir):
 def move_ad():
     global loc_ad
     dic = {}
-    new_ad = set()
+    new_ad = deque()
 
     for x,y in loc_ad:
         board[x][y] = '.'
         min_dist = 1e9
         min_loc = (0,0)
-        for d in range(1,10):
-            if d==5:
-                continue
-            nx = x+xd[d]
-            ny = y+yd[d]
-            if 0<=nx<R and 0<=ny<C:
-                dist = get_dist((nx,ny), loc_js)
-                if min_dist > dist:
-                    min_dist = dist
-                    min_loc = (nx,ny)
+
+        if x==loc_js[0]:
+            nx = x
+        elif x < loc_js[0]:
+            nx = x + 1
+        else:
+            nx = x - 1
+        if y==loc_js[1]:
+            ny = y
+        elif y < loc_js[1]:
+            ny = y + 1
+        else:
+            ny = y - 1
+        min_loc = (nx,ny)
         if min_loc==loc_js:
             return False
-        new_ad.add(min_loc)
+        new_ad.append(min_loc)
         if min_loc in dic:
             dic[min_loc]+=1
         else:
             dic[min_loc]=1
-    tmp = []
-    for loc in new_ad:
+    tmp = set()
+    for loc in new_ad: 
         if loc in tmp or dic[loc]>1:
             continue
-        tmp.append(loc)
+        tmp.add(loc)
     loc_ad = tmp
     for x,y in loc_ad:
         board[x][y] = 'R'
