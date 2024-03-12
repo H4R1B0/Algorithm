@@ -2,7 +2,7 @@ select date_format(sales_date,'%Y-%m-%d') sales_date, product_id, user_id, sales
 from online_sale
 where date_format(sales_date,'%Y-%m')='2022-03'
 
-union all
+union
 
 select date_format(sales_date,'%Y-%m-%d') sales_date, product_id, NULL user_id, sales_amount
 from offline_sale
