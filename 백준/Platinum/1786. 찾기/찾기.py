@@ -21,7 +21,7 @@ def kmp(text, pattern):
             j = pi[j-1]
         if text[i] == pattern[j]:
             if j == M-1:
-                answer.append(i - M + 2) # 자바와 다르게 파이썬은 0이 아닌 1부터 시작하는 인덱스를 사용합니다.
+                answer.append(i - M + 2)
                 j = pi[j]
             else:
                 j += 1
@@ -31,5 +31,4 @@ text = input()
 pattern = input()
 answer = kmp(text, pattern)
 print(len(answer))
-for ans in answer:
-    print(ans, end=' ')
+print(*answer)
