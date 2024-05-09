@@ -24,17 +24,15 @@ def dfs(x, y):
             move(dd[d])
     return cnt
 
-for _ in range(3):
-    board = [list(map(int, input().split())) for _ in range(6)]
-    visit = [[False]*3 for _ in range(4)]
-    flag = False
+def get_answer():    
     for i in range(6):
         for j in range(6):
             if board[i][j]==1:
                 visit[1][1] = True
                 cnt = dfs(i, j)
-                flag = True
-                break
-        if flag:
-            break
-    print('yes' if cnt==6 else 'no')
+                return 'yes' if cnt==6 else 'no'
+                
+for _ in range(3):
+    board = [list(map(int, input().split())) for _ in range(6)]
+    visit = [[False]*3 for _ in range(4)]
+    print(get_answer())
