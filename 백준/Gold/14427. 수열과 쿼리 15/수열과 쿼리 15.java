@@ -20,6 +20,7 @@ class Main {
             arr[i] = Integer.parseInt(st.nextToken());
             pq.add(new int[]{arr[i],i});
         }
+        StringBuilder answer = new StringBuilder();
         int M = Integer.parseInt(br.readLine());
         for (int i=0;i<M;i++) {
             String[] cmd = br.readLine().split(" ");
@@ -32,8 +33,9 @@ class Main {
                 while(!pq.isEmpty() && arr[pq.peek()[1]] != pq.peek()[0]) {
                     pq.poll();
                 }
-                System.out.println(pq.peek()[1] + 1);
+                answer.append(pq.peek()[1] + 1).append('\n');
             }
         }
+        System.out.println(answer);
     }
 }
