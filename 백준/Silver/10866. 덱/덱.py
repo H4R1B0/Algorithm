@@ -6,7 +6,7 @@ d = deque()
 n = int(input())
 
 for i in range(n):
-    command = sys.stdin.readline().split()
+    command = input().split()
 
     if command[0] == 'push_front':
         d.appendleft(command[1])
